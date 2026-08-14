@@ -14,7 +14,7 @@ suite (`storage/conformance`), an in-memory reference backend (`storage/mem`), a
 It is the exact equivalent of `database/sql/driver` in the Go stdlib. `tinywasm/orm` (the query
 builder, `Create`/`Update`/`Delete`/`Where`/`ReadAll`) is the equivalent of `database/sql` — an
 **optional ergonomic layer** on top of this contract, never the other way around. See
-[`app-releases/docs/DB_PORT_PROPOSAL.md`](https://github.com/tinywasm/app-releases/blob/main/docs/DB_PORT_PROPOSAL.md)
+[`app-releases/docs/DB_PORT_PROPOSAL.md`](https://github.com/tinywasm/app/blob/main/docs/DB_PORT_PROPOSAL.md)
 for the full architectural reasoning.
 
 **This package must be usable standalone**, without ever importing `orm`. A backend author, or `ddl`,
