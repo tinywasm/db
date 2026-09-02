@@ -103,17 +103,24 @@ func (e *engine) Exec(query string, args ...any) error {
 		}
 		e.tables[idx].rows = append(e.tables[idx].rows, newRow)
 	case storage.ActionUpdate:
-		// Consumers build q.Columns from m.Schema() in order, so q.Columns[i] and
-		// schema[i] always name the same field — no lookup needed.
+		// The PK is skipped by NAME, never by position. This used to index the
+		// schema with the column's own index, on the assumption that a consumer
+		// always builds q.Columns from the whole schema in order. A partial
+		// UPDATE breaks that assumption outright: orm.UpdateFields writes one
+		// column, so q.Columns[0] is whatever field the caller named while
+		// schema[0] is still the PK — and every write was skipped as if it were
+		// the primary key. Silently: the statement reported success and changed
+		// nothing.
 		schema := e.lastM.Schema()
 		for _, row := range e.match(q.Table, q.Conditions) { // match returns rows aliasing storage
 			for i, col := range q.Columns {
-				if i < len(schema) && schema[i].IsPK() {
+				if i >= len(q.Values) {
+					continue
+				}
+				if isPKColumn(schema, col) {
 					continue // do not overwrite PK on update
 				}
-				if i < len(q.Values) {
-					row.set(col, q.Values[i])
-				}
+				row.set(col, q.Values[i])
 			}
 		}
 	case storage.ActionDelete:
@@ -130,6 +137,18 @@ func (e *engine) Exec(query string, args ...any) error {
 		e.tables[idx].rows = kept
 	}
 	return nil
+}
+
+// isPKColumn reports whether col names the primary key of schema. A linear
+// scan over a handful of fields, and no map: this package compiles wherever the
+// storage layer does, and a map would buy nothing over a scan this short.
+func isPKColumn(schema model.Fields, col string) bool {
+	for _, f := range schema {
+		if f.Name == col {
+			return f.IsPK()
+		}
+	}
+	return false
 }
 
 func (e *engine) QueryRow(query string, args ...any) storage.Scanner {
