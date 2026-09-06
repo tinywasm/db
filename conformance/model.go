@@ -1,6 +1,6 @@
 package conformance
 
-import "github.com/tinywasm/model"
+import "webtyp.com/model"
 
 // Widget is the canonical record every backend is driven with. Its schema carries real DB
 // metadata (types + PK) so SQL backends can CREATE TABLE it; mem ignores the metadata and

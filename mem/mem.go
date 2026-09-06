@@ -1,9 +1,9 @@
 package mem
 
 import (
-	"github.com/tinywasm/fmt"
-	"github.com/tinywasm/model"
-	"github.com/tinywasm/storage"
+	"webtyp.com/fmt"
+	"webtyp.com/model"
+	"webtyp.com/storage"
 )
 
 // New returns a functional in-memory storage.Conn. It interprets the structured storage.Query
@@ -16,7 +16,7 @@ func New() storage.Conn {
 
 // dbCell is one column/value pair. Rows and tables are plain slices scanned linearly — no Go
 // map anywhere: TinyGo's map runtime is heavy and bloats the wasm binary, prohibited across
-// tinywasm (see AGENTS.md). Table/row counts here are tiny (test fixtures), so a linear scan
+// webtyp (see AGENTS.md). Table/row counts here are tiny (test fixtures), so a linear scan
 // costs nothing in practice.
 type dbCell struct {
 	col string

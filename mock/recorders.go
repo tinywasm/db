@@ -1,8 +1,8 @@
 package mock
 
 import (
-	"github.com/tinywasm/model"
-	"github.com/tinywasm/storage"
+	"webtyp.com/model"
+	"webtyp.com/storage"
 )
 
 // Executor captures execution calls.

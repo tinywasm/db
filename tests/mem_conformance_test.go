@@ -3,10 +3,10 @@ package tests
 import (
 	"testing"
 
-	"github.com/tinywasm/model"
-	"github.com/tinywasm/storage"
-	"github.com/tinywasm/storage/conformance"
-	"github.com/tinywasm/storage/mem"
+	"webtyp.com/model"
+	"webtyp.com/storage"
+	"webtyp.com/storage/conformance"
+	"webtyp.com/storage/mem"
 )
 
 func TestMemConformance(t *testing.T) {

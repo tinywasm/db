@@ -1,11 +1,11 @@
-# tinywasm/storage
+# webtyp/storage
 <img src="docs/img/badges.svg">
 
-Storage port for tinywasm: Executor/Compiler contract, DML value types, conformance and in-memory reference backend.
+Storage port for webtyp: Executor/Compiler contract, DML value types, conformance and in-memory reference backend.
 
 ## Overview
 
-`storage` defines the foundational storage port for the `tinywasm` ecosystem. It specifies standard database driver interfaces (`Executor` & `Compiler`, unified as `Conn`) and agnostic DML value structures (e.g., `Query`, `Condition`, `Order`, `Plan`) that cross the boundary between query builders and drivers. It is designed specifically to be fully isomorphic and compatible with standard Go and TinyGo (`GOOS=js GOARCH=wasm`).
+`storage` defines the foundational storage port for the `webtyp` ecosystem. It specifies standard database driver interfaces (`Executor` & `Compiler`, unified as `Conn`) and agnostic DML value structures (e.g., `Query`, `Condition`, `Order`, `Plan`) that cross the boundary between query builders and drivers. It is designed specifically to be fully isomorphic and compatible with standard Go and TinyGo (`GOOS=js GOARCH=wasm`).
 
 ## API Usage Documentation
 
@@ -17,8 +17,8 @@ Use `storage.Conn` to execute and compile actions. Every backend driver (like `s
 
 ```go
 import (
-	"github.com/tinywasm/storage"
-	"github.com/tinywasm/storage/mem"
+	"webtyp.com/storage"
+	"webtyp.com/storage/mem"
 )
 
 func main() {

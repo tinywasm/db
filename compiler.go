@@ -1,6 +1,6 @@
 package storage
 
-import "github.com/tinywasm/model"
+import "webtyp.com/model"
 
 // Compiler converts agnostic Query values into engine-specific Plans. Each backend dialect
 // (postgres, sqlite) implements this to render its own SQL.

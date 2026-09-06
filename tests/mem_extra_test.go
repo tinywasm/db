@@ -4,9 +4,9 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/tinywasm/model"
-	"github.com/tinywasm/storage"
-	"github.com/tinywasm/storage/mem"
+	"webtyp.com/model"
+	"webtyp.com/storage"
+	"webtyp.com/storage/mem"
 )
 
 // ExtraDummy is a helper model for testing mem extras.

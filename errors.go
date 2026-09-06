@@ -1,6 +1,6 @@
 package storage
 
-import "github.com/tinywasm/fmt"
+import "webtyp.com/fmt"
 
 // ErrNoRows is the agnostic sentinel for "query returned no rows". Conn implementations
 // (postgres, sqlt) must map their driver-specific no-rows error to this value so callers can

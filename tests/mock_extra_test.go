@@ -4,9 +4,9 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/tinywasm/model"
-	"github.com/tinywasm/storage"
-	"github.com/tinywasm/storage/mock"
+	"webtyp.com/model"
+	"webtyp.com/storage"
+	"webtyp.com/storage/mock"
 )
 
 func TestMockExecutorAndCompiler(t *testing.T) {

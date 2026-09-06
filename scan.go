@@ -1,6 +1,6 @@
 package storage
 
-import . "github.com/tinywasm/fmt"
+import . "webtyp.com/fmt"
 
 // ScanAny maps a JSON-decoded Go value (any) into a typed pointer. Used by host-side adapters
 // (REST, SQLite driver) and by db/mem, where values come from json.Unmarshal-shaped data

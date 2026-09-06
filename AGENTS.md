@@ -1,4 +1,4 @@
-# AGENTS.md — tinywasm/storage
+# AGENTS.md — webtyp/storage
 
 Working notes for AI agents operating in this library. For end-user docs see [README.md](README.md).
 The implementation plan lives in [docs/PLAN.md](docs/PLAN.md) — self-contained, inlines the exact
@@ -6,15 +6,15 @@ code to write (this repo is a fresh `gonew`, there is nothing to reference by im
 
 ## Mission of this package
 
-`tinywasm/storage` is the **storage port** of the tinywasm ecosystem: the contract a storage backend
+`webtyp/storage` is the **storage port** of the webtyp ecosystem: the contract a storage backend
 (`postgres`, `sqlt`, `indexdb`) must implement (`Executor`+`Compiler`, unified as `Conn`), the DML
 value types that cross that boundary (`Query`/`Condition`/`Order`/`Plan`), an executable conformance
 suite (`storage/conformance`), an in-memory reference backend (`storage/mem`), and test recorders (`storage/mock`).
 
-It is the exact equivalent of `database/sql/driver` in the Go stdlib. `tinywasm/orm` (the query
+It is the exact equivalent of `database/sql/driver` in the Go stdlib. `webtyp/orm` (the query
 builder, `Create`/`Update`/`Delete`/`Where`/`ReadAll`) is the equivalent of `database/sql` — an
 **optional ergonomic layer** on top of this contract, never the other way around. See
-[`app-releases/docs/DB_PORT_PROPOSAL.md`](https://github.com/tinywasm/app/blob/main/docs/DB_PORT_PROPOSAL.md)
+[`app-releases/docs/DB_PORT_PROPOSAL.md`](https://github.com/webtyp/app/blob/main/docs/DB_PORT_PROPOSAL.md)
 for the full architectural reasoning.
 
 **This package must be usable standalone**, without ever importing `orm`. A backend author, or `ddl`,
@@ -36,7 +36,7 @@ unavoidable size to every wasm binary that imports this code, directly or transi
 every backend and every app in the ecosystem — this is the most-imported package after `model` and
 `fmt`). A map introduced here is a tax paid by the entire ecosystem, forever.
 
-- For a **string→string** pair, use `github.com/tinywasm/fmt.KeyValue{Key, Value string}`.
+- For a **string→string** pair, use `webtyp.com/fmt.KeyValue{Key, Value string}`.
 - For anything else (a table's rows, a row's columns, a lookup by name), use a small local
   slice-of-structs scanned linearly. See `storage/mem`'s `dbCell`/`dbRow`/`dbTable` (docs/PLAN.md §5) —
   every collection in this repo is tiny (one table's columns, one row's cells), so a linear scan
@@ -58,7 +58,7 @@ every backend and every app in the ecosystem — this is the most-imported packa
   §6.3/§6.4/§6.8: the builder is invariant glue written once, not part of what varies per backend).
   Do not add ergonomic sugar here "to make `storage` nicer to use directly" — if it doesn't vary by
   backend, it doesn't belong in the contract.
-- **No DDL.** `CreateTable`/`Sync`/schema management lives in `tinywasm/ddl`, a separate repo that
+- **No DDL.** `CreateTable`/`Sync`/schema management lives in `webtyp/ddl`, a separate repo that
   consumes `storage.Conn` + `storage.Compiler`. This package has zero opinions about schema.
 - **No DSN registry (`Open`/`Register`).** A string-keyed lookup that fails at runtime ("unknown
   scheme") is exactly the kind of thing the construction harness forbids (fail at compile time, not
@@ -109,7 +109,7 @@ All test files inside `tests/` use `package tests`. This enforces that they only
 Install test runner once:
 
 ```bash
-go install github.com/tinywasm/devflow/cmd/gotest@latest
+go install webtyp.com/devflow/cmd/gotest@latest
 ```
 
 Run:

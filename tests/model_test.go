@@ -3,8 +3,8 @@ package tests
 import (
 	"testing"
 
-	"github.com/tinywasm/model"
-	"github.com/tinywasm/storage/conformance"
+	"webtyp.com/model"
+	"webtyp.com/storage/conformance"
 )
 
 // strCell/intCell/boolCell are linear-scan slice entries, mirroring mem.dbCell — no map

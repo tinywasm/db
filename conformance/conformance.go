@@ -4,8 +4,8 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/tinywasm/model"
-	"github.com/tinywasm/storage"
+	"webtyp.com/model"
+	"webtyp.com/storage"
 )
 
 // Factory builds, for ONE clause, a fresh storage.Conn whose Widget table already exists and is

@@ -4,7 +4,7 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/tinywasm/storage"
+	"webtyp.com/storage"
 )
 
 func TestConditions(t *testing.T) {
