@@ -474,11 +474,11 @@ func TestMemExtra(t *testing.T) {
 		if gotId != "1" || gotName != "dummy_name" {
 			t.Errorf("expected 1 and dummy_name, got %s and %s", gotId, gotName)
 		}
-		if gotQty != 999 {
-			t.Errorf("expected gotQty to remain 999, got %d", gotQty)
+		if gotQty != 0 {
+			t.Errorf("expected gotQty to be zero (NULL scans as zero), got %d", gotQty)
 		}
-		if !gotActive {
-			t.Errorf("expected gotActive to remain true, got false")
+		if gotActive {
+			t.Errorf("expected gotActive to be false (NULL scans as zero), got true")
 		}
 	})
 

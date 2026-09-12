@@ -335,10 +335,9 @@ func scanInto(row dbRow, schema []model.Field, dest []any) error {
 		if i >= len(dest) {
 			break
 		}
-		if v, ok := row.get(f.Name); ok {
-			if err := storage.ScanAny(v, dest[i]); err != nil {
-				return err
-			}
+		v, _ := row.get(f.Name)
+		if err := storage.ScanAny(v, dest[i]); err != nil {
+			return err
 		}
 	}
 	return nil

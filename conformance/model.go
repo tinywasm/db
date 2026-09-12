@@ -12,6 +12,7 @@ var WidgetModel = model.Definition{
 		{Name: "name", Type: model.Text(), NotNull: true},
 		{Name: "qty", Type: model.Int(), NotNull: true},
 		{Name: "active", Type: model.Bool(), NotNull: true},
+		{Name: "note", Type: model.Text()}, // nullable ON PURPOSE: proves NULL scans as ""
 	},
 }
 
@@ -20,17 +21,21 @@ type Widget struct {
 	Name   string
 	Qty    int64
 	Active bool
+	Note   string
 }
 
 func (w *Widget) ModelName() string     { return WidgetModel.Name }
 func (w *Widget) Schema() []model.Field { return WidgetModel.Fields }
-func (w *Widget) Pointers() []any       { return []any{&w.Id, &w.Name, &w.Qty, &w.Active} }
-func (w *Widget) IsNil() bool           { return w == nil }
+func (w *Widget) Pointers() []any {
+	return []any{&w.Id, &w.Name, &w.Qty, &w.Active, &w.Note}
+}
+func (w *Widget) IsNil() bool { return w == nil }
 func (w *Widget) EncodeFields(wr model.FieldWriter) {
 	wr.String("id", w.Id)
 	wr.String("name", w.Name)
 	wr.Int("qty", w.Qty)
 	wr.Bool("active", w.Active)
+	wr.String("note", w.Note)
 }
 func (w *Widget) DecodeFields(r model.FieldReader) {
 	if v, ok := r.String("id"); ok {
@@ -44,6 +49,9 @@ func (w *Widget) DecodeFields(r model.FieldReader) {
 	}
 	if v, ok := r.Bool("active"); ok {
 		w.Active = v
+	}
+	if v, ok := r.String("note"); ok {
+		w.Note = v
 	}
 }
 

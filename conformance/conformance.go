@@ -37,6 +37,7 @@ func Run(t *testing.T, f Factory) {
 	t.Run("in_operator_filters", func(t *testing.T) { inOperatorFilters(t, f) })
 	t.Run("update_changes_matched_rows_only", func(t *testing.T) { updateChangesMatchedOnly(t, f) })
 	t.Run("delete_removes_matched_rows_only", func(t *testing.T) { deleteRemovesMatchedOnly(t, f) })
+	t.Run("null_scans_as_zero", func(t *testing.T) { nullScansAsZero(t, f) })
 }
 
 func setup(t *testing.T, f Factory, seed ...*Widget) storage.Conn {
@@ -339,5 +340,25 @@ func deleteRemovesMatchedOnly(t *testing.T, f Factory) {
 	var got2 Widget
 	if err := readOne(conn, &got2, storage.Eq("id", "w2")); err != nil {
 		t.Errorf("expected w2 to still exist, got: %v", err)
+	}
+}
+
+func nullScansAsZero(t *testing.T, f Factory) {
+	conn := f.New(t, &Widget{})
+	w := &Widget{Id: "w1", Name: "alpha", Qty: 3, Active: true}
+	q := storage.Query{Action: storage.ActionCreate, Table: w.ModelName(), Columns: []string{"id", "name", "qty", "active"}, Values: []any{w.Id, w.Name, w.Qty, w.Active}}
+	plan, err := conn.Compile(q, w)
+	if err != nil {
+		t.Fatalf("create without note: %v", err)
+	}
+	if err := conn.Exec(plan.Query, plan.Args...); err != nil {
+		t.Fatalf("exec without note: %v", err)
+	}
+	got := Widget{Note: "sentinel"}
+	if err := readOne(conn, &got, storage.Eq("id", "w1")); err != nil {
+		t.Fatalf("readOne: %v", err)
+	}
+	if got.Note != "" {
+		t.Errorf("NullScansAsZero: note = %q, want \"\" (a NULL column must scan as the Go zero value)", got.Note)
 	}
 }
